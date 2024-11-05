@@ -2,6 +2,7 @@ import './style.css'
 import {fetchData, postData, deleteData, editData} from './apiCalls'
 import {showStatus} from './errorHandling'
 
+
 //Sections, buttons, text
 const itemsView = document.querySelector("#items-view")
 const merchantsView = document.querySelector("#merchants-view")
@@ -256,3 +257,5 @@ function findMerchant(id) {
     }
   }
 }
+
+
