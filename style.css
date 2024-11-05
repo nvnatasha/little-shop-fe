@@ -21,8 +21,13 @@ html {
 
 aside {
 
-  background: linear-gradient(90deg, #ff99cc, #ff66b3);
+  background: linear-gradient(90deg, #ff8fd0, #ff66b3);
+  position: sticky;
+  top: 80px; /* adjust based on your header height */
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
 }
+
 
 header {
   text-align: center;
@@ -133,10 +138,35 @@ section {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   }
 
+  .delete-merchant.icon {
+  background-color: #000;
+  color: #f98ed2;
+  }
+
+.edit-merchant.icon {
+  background-color: #000;
+  color: #f98ed2;
+}
+
 .item {
   width: 30%;
   flex-direction: column;
   justify-content: center;
+  
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  30% { transform: translateY(-10px); }
+  50% { transform: translateY(0); }
+}
+
+.item:hover, .merchant:hover {
+  animation: bounce 0.5s ease infinite;
+}
+
+#add-new-button {
+  background-color: #656565;
 }
 
 p {
@@ -176,6 +206,9 @@ div {
   align-items: center;
 }
 
+#submit-item > button{
+  background-color: #656565;
+}
 
 .view-items-button {
   padding: 5px;
@@ -207,122 +240,11 @@ div {
 .display-options > button:hover {
   background-color: #fb037f;
 }
-  /* .display-options > button {
-    appearance: none;
-    background-color: #585858;
-    border: 2px thick #1A1A1A;
-    border-radius: 15px;
-    box-sizing: border-box;
-    color:#f590cc;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-    font-size: 20px;
-    font-weight: 600;
-    line-height: normal;
-    margin: 0;
-    min-height: 20%;
-    min-width: 0;
-    outline: none;
-    padding: 16px 24px;
-    text-align: center;
-    text-decoration: none;
-    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: 25%;
-    will-change: transform;
-  }
-  
-  .button-28:disabled {
-    pointer-events: none;
-  }
-  
-  .button-28:hover {
-    color: #da46ff;
-    background-color: #1A1A1A;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
-  }
-  
-  .button-28:active {
-    box-shadow: none;
-    transform: translateY(0); */
-  /* } */
 
   .view-merchant-items  {
-
-        margin: 0;
-        padding: 0;
-        height: 20%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        background: #000;
-        color:#f590cc;       
-    }
-    
-    .glow-on-hover {
-        width: 220px;
-        height: 50px;
-        border: none;
-        outline: none;
-        color: #fff;
-        background: #111;
-        cursor: pointer;
-        position: relative;
-        z-index: 0;
-        border-radius: 60px;
-    }
-    
-    .glow-on-hover:before {
-        content: '';
-        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-        position: absolute;
-        top: -2px;
-        left:-2px;
-        background-size: 400%;
-        z-index: -1;
-        filter: blur(10px);
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
-        animation: glowing 20s linear infinite;
-        opacity: 0.6;
-        transition: opacity .3s ease-in-out;
-        border-radius: 15px;
-    }
-    
-    .glow-on-hover:active {
-        color: #000
-    }
-    
-    .glow-on-hover:active:after {
-        background: transparent;
-    }
-    
-    .glow-on-hover:hover:before {
-        opacity: 1;
-    }
-    
-    .glow-on-hover:after {
-        z-index: -1;
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: #111;
-        left: 0;
-        top: 0;
-        border-radius: 10px;
-    }
-    
-    @keyframes glowing {
-        0% { background-position: 0 0; }
-        50% { background-position: 200% 0; }
-        100% { background-position: 0 0; }
-    }
+    background-color: #000;
+    color: #f98ed2;
+  }
   
     nav > button, .view-items-button, .glow-on-hover {
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -335,16 +257,41 @@ div {
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
+    button.submit {
+      background-color: #656565; /* Soft pink */
+      color: rgb(255, 146, 222); /* Text color */
+      padding: 12px 20px; /* Top/Bottom, Left/Right padding */
+      border: none; /* Remove default border */
+      border-radius: 30px; /* Rounded corners */
+      font-size: 16px; /* Font size */
+      cursor: pointer; /* Pointer cursor on hover */
+      transition: all 0.3s ease; /* Smooth transition for effects */
+    }
+
+    button.submit:hover {
+      background-color: #ff0099; /* Darker shade of pink */
+      transform: translateY(-2px); /* Slightly lift the button */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow */
+    }
+    
+    label {
+    color: #ffff;
+    } 
+
+  p #status-message {
+    color: #ffff;
+  }
+
 .merchant-name-in-item {
   display: inline;
 }
 
 .success {
-  color: green;
+  color: rgb(252, 158, 203);
 }
 
 .fail {
-  color: red;
+  color: rgb(4, 4, 4);
 }
 
 /* HIDDEN ELEMENTS */
@@ -353,4 +300,73 @@ div {
   display: none;
 } 
   
-co
+
+
+
+/* CSS */
+ #add-new-button {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 165, 229);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#add-new-button:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+#add-new-button:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #787878;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
