@@ -39,7 +39,8 @@ Run `npm run dev` to start developing.
 You'll see in the terminal that the project has opened at "http://localhost:5173/"
 
 ### Preview of App:
-(Provide ONE gif or screenshot of your application - choose the "coolest" piece of functionality to show off. gifs preferred!)
+
+![Screenshot 2024-11-06 at 6 32 50 AM](https://github.com/user-attachments/assets/d53bbdfd-df43-451c-9b68-45600830ddb5)
 
 ### Context:
 This project was done during weeks 4 and 5 of Turing Mod 2. Natasha contributed the majority of the front end work
