@@ -270,13 +270,16 @@ function addRemoveActiveNav(nav1, nav2) {
 }
 
 function filterByMerchant(merchantId) {
-  const specificMerchantItems = []
+  let specificMerchantItems = items.filter( (item) => {
+    return item.attributes.merchant_id === parseInt(merchantId)
+  })
+  //const specificMerchantItems = []
+    // if (items[i].attributes.merchant_id === parseInt(merchantId)) {
+    //   specificMerchantItems(items[i])
 
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].attributes.merchant_id === parseInt(merchantId)) {
-      specificMerchantItems.push(items[i])
-    }
-  }
+  // for (let i = 0; i < items.length; i++) {
+  //   }
+  // }
 
   return specificMerchantItems
 }
