@@ -30,22 +30,30 @@ ______________________________________________________
 # Hang in There  
 
 ### Abstract:
-(Briefly describe what you built and its features. What problem is the app solving? How does this application solve that problem?)
+The front end application allows the user to view, delete and update merchants and their items.
 
 ### Installation Instructions:
-(What steps does a person have to take to get your app cloned down and running?)
+Clone from: https://github.com/nvnatasha/little-shop-fe
+Run `npm install`
+Run `npm run dev` to start developing.
+You'll see in the terminal that the project has opened at "http://localhost:5173/"
 
 ### Preview of App:
 (Provide ONE gif or screenshot of your application - choose the "coolest" piece of functionality to show off. gifs preferred!)
 
 ### Context:
-(Give some context for the project here. How long did you have to work on it? What specific work/improvements did you contribute to this FE application?)
+This project was done during weeks 4 and 5 of Turing Mod 2. Natasha contributed the majority of the front end work
 
 ### Contributors:
+Natasha Vasquez - https://github.com/nvnatasha
+James Cochran - https://github.com/James-Cochran
+Jonathan Atkins - https://github.com/Jonathan-Atkins
+Wally Wallace - https://github.com/wally-yawn
+
 (Who worked on this application? Link to your GitHub. Consider also providing LinkedIn link)
 
 ### Learning Goals:
-(What were the learning goals of this project? What tech did you work with?)
+The learning goals were to build a front end that could interface with a rails backend through restful apis
 
 ### Wins + Challenges:
 (What are 2-3 wins you have from this project? What were some challenges you faced - and how did you get over them?)
