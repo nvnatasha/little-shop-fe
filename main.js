@@ -245,7 +245,7 @@ function displayItems(items) {
       <h2>${item.attributes.name}</h2>
       <p>${item.attributes.description}</p>
       <p>$${item.attributes.unit_price}</p>
-      <p class="merchant-name-in-item">Merchant: ${merchant}</p>
+      <p> Merchant: ${merchant}</p>
       <div>
         <button class="delete-item icon">🗑️</button>
       </div>
