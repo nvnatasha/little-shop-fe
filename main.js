@@ -200,7 +200,6 @@ function submitItem(event) {
     });
 }
 
-
 // Functions that control the view 
 function showMerchantsView() {
   showingText.innerText = "All Merchants"
@@ -233,14 +232,10 @@ function showMerchantItemsView(id, items) {
 function displayItems(items) {
 
   itemsView.innerHTML = '';
-
-
   if (items.length === 0) {
     itemsView.innerHTML = '<p>No Items Yet For This Merchant.</p>';
     return; 
   }
-
-
   let firstHundredItems = items.slice(0, 99);
   firstHundredItems.forEach(item => {
     let merchant = findMerchant(item.attributes.merchant_id).attributes.name;
@@ -361,7 +356,8 @@ const findMerchant = (id) => {
 
   return foundMerchant || undefined;
 }
-  
+
+
 
 
 
