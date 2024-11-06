@@ -9,12 +9,18 @@ const merchantsView = document.querySelector("#merchants-view")
 const merchantsNavButton = document.querySelector("#merchants-nav")
 const itemsNavButton = document.querySelector("#items-nav")
 const addNewButton = document.querySelector("#add-new-button")
+const addNewItemButton = document.querySelector("#add-new-item-button")
 const showingText = document.querySelector("#showing-text")
 
 //Form elements
 const merchantForm = document.querySelector("#new-merchant-form")
 const newMerchantName = document.querySelector("#new-merchant-name")
 const submitMerchantButton = document.querySelector("#submit-merchant")
+const itemForm = document.querySelector("#new-item-form")
+const newItemName = document.querySelector("#new-item-name")
+const newItemDescription = document.querySelector("#new-item-description")
+const newItemPrice = document.querySelector("#new-item-price")
+const submitItemButton = document.querySelector("#submit-item")
 
 // Event Listeners
 merchantsView.addEventListener('click', (event) => {
@@ -28,8 +34,16 @@ addNewButton.addEventListener('click', () => {
   show([merchantForm])
 })
 
+addNewItemButton.addEventListener('click', () => {
+  show([itemForm])
+})
+
 submitMerchantButton.addEventListener('click', (event) => {
   submitMerchant(event)
+})
+
+submitItemButton.addEventListener('click', (event) => {
+  submitItem(event)
 })
 
 //Global variables
@@ -123,6 +137,26 @@ function submitMerchant(event) {
       hide([merchantForm]) 
     })
 }
+
+function submitItem(event) {
+  event.preventDefault()
+  var itemData = {
+    name: newItemName.value,
+    description: newItemDescription.value,
+    unit_price: parseFloat(newItemPrice.value)
+  }
+  postData('items', itemData)
+  .then(postedItem => {
+    items.push(postedItem.data)
+    displayItems(items)
+    newItemName.value = ''
+    newItemDescription.value = ''
+    newItemPrice.value = ''
+    showStatus('Success! Item added!', true)
+    hide([itemForm])
+  })
+  }
+
 
 // Functions that control the view 
 function showMerchantsView() {
