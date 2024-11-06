@@ -31,7 +31,7 @@ function postData(endpoint, body) {
     .then(response => checkForError(response))  
     .catch(error => {
       console.log(error)
-      showStatus('Failed to create merchant. Try again later.', false)
+      showStatus('Failed to create. Try again later.', false)
     })
 }
 
@@ -51,7 +51,7 @@ function deleteData(endpoint) {
   })  
   .catch(error => {
     console.log(error)
-    showStatus('Failed to delete merchant. Try again later.', false)
+    showStatus('Failed to delete. Try again later.', false)
   })
 }
 

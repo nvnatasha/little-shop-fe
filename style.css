@@ -143,6 +143,11 @@ section {
   color: #f98ed2;
   }
 
+  .delete-item.icon {
+    background-color: #000;
+    color: #f98ed2;
+  }
+
 .edit-merchant.icon {
   background-color: #000;
   color: #f98ed2;
