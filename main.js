@@ -27,6 +27,10 @@ merchantsView.addEventListener('click', (event) => {
   handleMerchantClicks(event)
 })
 
+itemsView.addEventListener('click', (event) => {
+  handleItemClicks(event)
+})
+
 merchantsNavButton.addEventListener('click', showMerchantsView)
 itemsNavButton.addEventListener('click', showItemsView)
 
@@ -76,6 +80,12 @@ function handleMerchantClicks(event) {
   }
 }
 
+function handleItemClicks(event) {
+  if (event.target.classList.contains("delete-item")) {
+    deleteItem(event)
+  }
+}
+
 function deleteMerchant(event) {
   const id = event.target.closest("article").id.split('-')[1]
   deleteData(`merchants/${id}`)
@@ -85,6 +95,18 @@ function deleteMerchant(event) {
       merchants.splice(indexOfMerchant, 1)
       displayMerchants(merchants)
       showStatus('Success! Merchant removed!', true)
+    })
+}
+
+function deleteItem(event) {
+  const id2 = event.target.closest("div").id2.split('-')[1]
+  deleteData(`items/${id2}`)
+    .then(() => {
+      let deletedItem = findItem(id2)
+      let indexOfItem = items.indexOf(deletedItem)
+      items.splice(indexOfItem, 1)
+      displayItems(items)
+      showStatus('Success! Item removed!', true)
     })
 }
 
@@ -140,15 +162,13 @@ function submitMerchant(event) {
 
 function submitItem(event) {
   event.preventDefault()
-  var itemData = {
-    name: newItemName.value,
-    description: newItemDescription.value,
-    unit_price: parseFloat(newItemPrice.value)
-  }
-  postData('items', itemData)
+  var itemName = newItemName.value
+  var itemDesc = newItemDescription.value
+  var itemPrice = newItemPrice.value
+  postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice})
   .then(postedItem => {
     items.push(postedItem.data)
-    displayItems(items)
+    displayAddedItem(postedItem.data)
     newItemName.value = ''
     newItemDescription.value = ''
     newItemPrice.value = ''
@@ -156,6 +176,7 @@ function submitItem(event) {
     hide([itemForm])
   })
   }
+
 
 
 // Functions that control the view 
@@ -172,7 +193,7 @@ function showItemsView() {
   showingText.innerText = "All Items"
   addRemoveActiveNav(itemsNavButton, merchantsNavButton)
   addNewButton.dataset.state = 'item'
-  show([itemsView, addNewItemButton])
+  show([itemsView, addNewItemButton ])
   hide([merchantsView, merchantForm, addNewButton])
   displayItems(items)
 }
@@ -186,19 +207,23 @@ function showMerchantItemsView(id, items) {
   displayItems(items)
 }
 
-// Functions that add data to the DOM
+
 function displayItems(items) {
   itemsView.innerHTML = ''
   let firstHundredItems = items.slice(0, 99)
   firstHundredItems.forEach(item => {
     let merchant = findMerchant(item.attributes.merchant_id).attributes.name
     itemsView.innerHTML += `
-     <article class="item" id="item-${item.id}">
+    <article class="item" id="item-${item.id}">
           <img src="" alt="">
           <h2>${item.attributes.name}</h2>
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
+          <p>$${item.attributes.merchant_id}</p>
           <p class="merchant-name-in-item">Merchant: ${merchant}</p>
+          <div>
+          <button class="delete-merchant icon">🗑️</button>
+          </div>
         </article>
     `
   })
@@ -245,6 +270,19 @@ function displayAddedMerchant(merchant) {
         </article>`)
 }
 
+function displayAddedItem(item) {
+  itemsView.insertAdjacentHTML('beforeend',
+  ` <article class="item" id="item-${item.id}">
+          <img src="" alt="">
+          <h2>${item.attributes.name}</h2>
+          <p>${item.attributes.description}</p>
+          <p>$${item.attributes.unit_price}</p>
+          <p>$${item.attributes.merchant_id}</p>
+          <p class="merchant-name-in-item">Merchant: ${merchants}</p>
+        </article>`)
+    
+  }
+
 function displayMerchantItems(event) {
   let merchantId = event.target.closest("article").id.split('-')[1]
   const filteredMerchantItems = filterByMerchant(merchantId)
@@ -279,6 +317,17 @@ function filterByMerchant(merchantId) {
   }
 
   return specificMerchantItems
+}
+
+function findItem(id) {
+  let foundItem;
+
+  for (let i = 0; i < items.length; i++) {
+    if (parseInt(items[i].id) === parseInt(id)) {
+      foundItem = items[i]
+      return foundItem
+    }
+  }
 }
 
 function findMerchant(id) {
