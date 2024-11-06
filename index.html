@@ -36,7 +36,7 @@
           <button id="submit-merchant" class="submit">Submit</button>
         </form>
         <p id="status-message" class="hidden"><!-- Status message here! --></p>
-        <form id="new-merchant-form" class="hidden">
+        <form id="new-item-form" class="hidden">
           <label for="new-item-name">New Item Name</label>
           <input id="new-item-name" name="new-item-name" type="text">
           <label for="new-item-description">New Item Description</label>
@@ -49,15 +49,18 @@
       <section id="merchants-view" class="view">
         <button class="button-28" role="button">Button 28</button>
         <button class="view-merchant-items" type="button">HOVER ME, THEN CLICK ME!</button>
-        <button class="edit-merchant-icon" type="button">EDIT</button>
+        <button class="edit-merchant.icon" type="button">EDIT</button>
+        <button class="delete-merchant.icon" type="button">DELETE</button>
           <!-- Data will be displayed here -->
+      </section>
+
+        <section id="items-view" class="view hidden"> 
+        
+          
         </section>
-        <section id="items-view" class="view hidden">
+        <section id="single-merchant-view" class="view hidden"> 
           <!-- Data will be displayed here -->
-        </section>
-        <section id="single-merchant-view" class="view hidden">
-          <!-- Data will be displayed here -->
-        </section>
+        </section> 
     </main>
     <script type="module" src="/main.js"></script>
   </body>
