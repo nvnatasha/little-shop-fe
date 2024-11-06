@@ -180,7 +180,7 @@ function submitItem(event) {
   }
 
 
-  postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: merchId })
+  postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: parseInt(merchId) })
     .then(postedItem => {
       items.push(postedItem.data);
       displayAddedItem(postedItem.data);
@@ -207,7 +207,7 @@ function showMerchantsView() {
   addRemoveActiveNav(merchantsNavButton, itemsNavButton)
   addNewButton.dataset.state = 'merchant'
   show([merchantsView, addNewButton])
-  hide([itemsView, addNewItemButton])
+  hide([itemsView, addNewItemButton, itemForm])
   displayMerchants(merchants)
 }
 
@@ -308,9 +308,8 @@ function displayAddedItem(item) {
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
           <p>${item.attributes.merchant_id}</p>
-          <p class="merchant-name-in-item">Merchant: ${merchants}</p>
-        </article>`)
-    
+          <p>class="merchant-name-in-item">Merchant: ${findMerchant(item.attributes.merchant_id).attributes.name}</p>
+        </article>`)   
   }
 
 function displayMerchantItems(event) {
