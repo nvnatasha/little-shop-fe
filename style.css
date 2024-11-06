@@ -154,18 +154,14 @@ section {
   
 }
 
-@keyframes bounce {
+/* @keyframes bounce {
   0% { transform: translateY(0); }
   30% { transform: translateY(-10px); }
   50% { transform: translateY(0); }
-}
+} */
 
 .item:hover, .merchant:hover {
   animation: bounce 0.5s ease infinite;
-}
-
-#add-new-button {
-  background-color: #656565;
 }
 
 p {
@@ -176,7 +172,7 @@ p {
   display: flex;
   flex-direction:row-reverse;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: stretch;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   color:#ffff
@@ -301,9 +297,7 @@ div {
   
 
 
-
-/* CSS */
-#add-new-button {
+#add-new-item-button, #add-new-button {
   margin: 2%;
   padding: 0.6em 2em;
   border: none;
@@ -319,7 +313,7 @@ div {
   touch-action: manipulation;
 }
 
-#add-new-button:before {
+#add-new-item-button:before, #add-new-button:before {
   content: "";
   background: linear-gradient(
     45deg,
@@ -359,7 +353,7 @@ div {
   }
 }
 
-#add-new-button:after {
+#add-new-item-button:after, #add-new-button:after {
   z-index: -1;
   content: "";
   position: absolute;
