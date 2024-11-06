@@ -20,6 +20,7 @@ const itemForm = document.querySelector("#new-item-form")
 const newItemName = document.querySelector("#new-item-name")
 const newItemDescription = document.querySelector("#new-item-description")
 const newItemPrice = document.querySelector("#new-item-price")
+const merchantId = document.querySelector("#merchant-id")
 const submitItemButton = document.querySelector("#submit-item")
 
 // Event Listeners
@@ -162,23 +163,42 @@ function submitMerchant(event) {
 }
 
 function submitItem(event) {
-  event.preventDefault()
-  var itemName = newItemName.value
-  var itemDesc = newItemDescription.value
-  var itemPrice = newItemPrice.value
-  var merchId = merchants.id
-  postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: merchId})
-  .then(postedItem => {
-    items.push(postedItem.data)
-    displayAddedItem(postedItem.data)
-    newItemName.value = ''
-    newItemDescription.value = ''
-    newItemPrice.value = ''
-    showStatus('Success! Item added!', true)
-    hide([itemForm])
-  })
+  event.preventDefault();
+
+ 
+  const itemName = newItemName.value;
+  const itemDesc = newItemDescription.value;
+  const itemPrice = newItemPrice.value;
+  
+ 
+  const merchId = merchantId.value; 
+  
+
+  if (!itemName || !itemDesc || !itemPrice || !merchId) {
+    showStatus('Please fill in all fields.', false);
+    return;
   }
 
+
+  postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: merchId })
+    .then(postedItem => {
+      items.push(postedItem.data);
+      displayAddedItem(postedItem.data);
+
+      
+      newItemName.value = '';
+      newItemDescription.value = '';
+      newItemPrice.value = ''
+      merchantId.value = ''
+     
+      showStatus('Success! Item added!', true);
+      hide([itemForm]);
+    })
+    .catch(error => {
+      showStatus('Error: Item could not be added.', false);
+      console.error(error);
+    });
+}
 
 
 // Functions that control the view 
@@ -211,23 +231,32 @@ function showMerchantItemsView(id, items) {
 
 
 function displayItems(items) {
-  itemsView.innerHTML = ''
-  let firstHundredItems = items.slice(0, 99)
+
+  itemsView.innerHTML = '';
+
+
+  if (items.length === 0) {
+    itemsView.innerHTML = '<p>No Items Yet For This Merchant.</p>';
+    return; 
+  }
+
+
+  let firstHundredItems = items.slice(0, 99);
   firstHundredItems.forEach(item => {
-    let merchant = findMerchant(item.attributes.merchant_id).attributes.name
+    let merchant = findMerchant(item.attributes.merchant_id).attributes.name;
     itemsView.innerHTML += `
     <article class="item" id="item-${item.id}">
-          <img src="" alt="">
-          <h2>${item.attributes.name}</h2>
-          <p>${item.attributes.description}</p>
-          <p>$${item.attributes.unit_price}</p>
-          <p class="merchant-name-in-item">Merchant: ${merchant}</p>
-          <div>
-          <button class="delete-item icon">🗑️</button>
-          </div>
-        </article>
-    `
-  })
+      <img src="" alt="">
+      <h2>${item.attributes.name}</h2>
+      <p>${item.attributes.description}</p>
+      <p>$${item.attributes.unit_price}</p>
+      <p class="merchant-name-in-item">Merchant: ${merchant}</p>
+      <div>
+        <button class="delete-item icon">🗑️</button>
+      </div>
+    </article>
+    `;
+  });
 }
 
 function displayMerchants(merchants) {
@@ -290,6 +319,8 @@ function displayMerchantItems(event) {
   showMerchantItemsView(merchantId, filteredMerchantItems)
 }
 
+
+
 //Helper Functions
 function show(elements) {
   elements.forEach(element => {
@@ -312,13 +343,6 @@ function filterByMerchant(merchantId) {
   let specificMerchantItems = items.filter( (item) => {
     return item.attributes.merchant_id === parseInt(merchantId)
   })
-  //const specificMerchantItems = []
-    // if (items[i].attributes.merchant_id === parseInt(merchantId)) {
-    //   specificMerchantItems(items[i])
-
-  // for (let i = 0; i < items.length; i++) {
-  //   }
-  // }
 
   return specificMerchantItems
 }
