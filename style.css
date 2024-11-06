@@ -6,18 +6,22 @@
 
 body, html {
   background-color: rgb(174, 172, 172);
+
 }
 
 body {
   display: flex;
   margin: 0px;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 /* SIDEBAR */
 
 aside {
-  width: 25%;
-  margin: none;
+
+  background: linear-gradient(90deg, #ff99cc, #ff66b3);
 }
 
 header {
@@ -52,7 +56,6 @@ nav {
 }
 
 nav > button {
- 
   display: inline-block;
   outline: 0;
   border:0;
@@ -88,7 +91,9 @@ main {
   flex-direction: column;
   padding: 10px;
   width: 75%;
-  background-color: rgb(100, 98, 98);
+  background: linear-gradient(135deg, #999999, #666666);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 form {
@@ -103,16 +108,36 @@ section {
 
 .item,
 .merchant {
-  display: flex;
-  background-color: rgb(247, 163, 218);
-  margin: 10px;
-  padding: 5px;
-}
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+    background-color: #ff9ce6;
+  }
+  
+  .item:hover, .merchant:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
 
 .item {
   width: 30%;
   flex-direction: column;
   justify-content: center;
+}
+
+p {
+  color:#585858;
+}
+
+#items-view {
+  display: flex;
+  flex-direction:row-reverse;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color:#ffff
 }
 
 .merchant {
@@ -159,10 +184,17 @@ div {
   align-items: center;
 }
 
- 
-  
-  /* CSS */
-  .display-options > button {
+
+.display-options > button, .view-items-button, .glow-on-hover {
+  background-color: #656565;
+  color: rgb(255, 158, 210);
+  font-size: 1.5em;
+}
+
+.display-options > button:hover {
+  background-color: #fb037f;
+}
+  /* .display-options > button {
     appearance: none;
     background-color: #585858;
     border: 2px thick #1A1A1A;
@@ -203,53 +235,92 @@ div {
   
   .button-28:active {
     box-shadow: none;
-    transform: translateY(0);
-  }
+    transform: translateY(0); */
+  /* } */
 
-  .view-merchant-items {
+  .view-merchant-items  {
 
-/* CSS */
-  background-color: #131313;
-  border: 1px solid transparent;
-  border-radius: .75rem;
-
-  color: #fe009d;
-  cursor: pointer;
-  flex: 0 0 auto;
-  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-  font-size: .7rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-  padding: 0% 1%;
-  text-align: center;
-  text-decoration: none #6B7280 solid;
-  text-decoration-thickness: auto;
-  transition-duration: .2s;
-  transition-property: background-color,border-color,color,fill,stroke;
-  transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-40:hover {
-  background-color: #374151;
-}
-
-.button-40:focus {
-  box-shadow: none;
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-@media (min-width: 768px) {
-  .button-40 {
-    padding: .75rem 1.5rem;
-  }
-}
+        margin: 0;
+        padding: 0;
+        height: 20%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        color:#f590cc;       
+    }
+    
+    .glow-on-hover {
+        width: 220px;
+        height: 50px;
+        border: none;
+        outline: none;
+        color: #fff;
+        background: #111;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 60px;
+    }
+    
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(10px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0.6;
+        transition: opacity .3s ease-in-out;
+        border-radius: 15px;
+    }
+    
+    .glow-on-hover:active {
+        color: #000
+    }
+    
+    .glow-on-hover:active:after {
+        background: transparent;
+    }
+    
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+    
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #111;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+    
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 200% 0; }
+        100% { background-position: 0 0; }
+    }
   
-  
-
+    nav > button, .view-items-button, .glow-on-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    nav > button:hover,
+    .view-items-button:hover,
+    .glow-on-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
 
 .merchant-name-in-item {
   display: inline;
