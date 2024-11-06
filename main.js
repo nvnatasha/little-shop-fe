@@ -319,26 +319,22 @@ function filterByMerchant(merchantId) {
   return specificMerchantItems
 }
 
-function findItem(id) {
-  let foundItem;
-
-  for (let i = 0; i < items.length; i++) {
-    if (parseInt(items[i].id) === parseInt(id)) {
-      foundItem = items[i]
-      return foundItem
-    }
-  }
+const findItem = (id) => {
+  const foundItem = items.find((item) =>{
+    return parseInt(item.id) === parseInt(id_)
+  })
+  return foundItem || undefined
 }
 
-function findMerchant(id) {
-  let foundMerchant;
 
-  for (let i = 0; i < merchants.length; i++) {
-    if (parseInt(merchants[i].id) === parseInt(id)) {
-      foundMerchant = merchants[i]
-      return foundMerchant
-    }
-  }
+const findMerchant = (id) => {
+  const foundMerchant = merchants.find((merchant) => {
+    return parseInt(merchant.id) === parseInt(id);
+  });
+
+  return foundMerchant || undefined;
 }
+  
+
 
 
