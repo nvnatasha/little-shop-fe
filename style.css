@@ -31,7 +31,20 @@ header {
   color: white;
   padding: 15px;
   font-family: fantasy;
+}
+.header-content {
+  display: flex;
+  align-items: center;
+}
 
+.logo {
+  width: 40px;
+  margin-right: 10px;
+}
+
+h1 {
+  font-size: 1.8em;
+  color: white;
 }
 
 h1 {
