@@ -11,6 +11,7 @@ const checkForError = response => {
   }
 }
 
+
 function fetchData(endpoint) {
   return fetch(base + endpoint)
     .then(response => checkForError(response))  
@@ -34,6 +35,7 @@ function postData(endpoint, body) {
       showStatus('Failed to create. Try again later.', false)
     })
 }
+
 
 function deleteData(endpoint) {
   return fetch(base + endpoint, {
