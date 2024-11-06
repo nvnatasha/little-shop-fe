@@ -165,27 +165,21 @@ function submitMerchant(event) {
 function submitItem(event) {
   event.preventDefault();
 
- 
   const itemName = newItemName.value;
   const itemDesc = newItemDescription.value;
-  const itemPrice = newItemPrice.value;
-  
- 
+  const itemPrice = newItemPrice.value; 
   const merchId = merchantId.value; 
   
-
   if (!itemName || !itemDesc || !itemPrice || !merchId) {
     showStatus('Please fill in all fields.', false);
     return;
   }
 
-
   postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: parseInt(merchId) })
     .then(postedItem => {
       items.push(postedItem.data);
       displayAddedItem(postedItem.data);
-
-      
+   
       newItemName.value = '';
       newItemDescription.value = '';
       newItemPrice.value = ''
@@ -245,7 +239,7 @@ function displayItems(items) {
       <h2>${item.attributes.name}</h2>
       <p>${item.attributes.description}</p>
       <p>$${item.attributes.unit_price}</p>
-      <p class="merchant-name-in-item">Merchant: ${merchant}</p>
+      <p> Merchant: ${merchant}</p>
       <div>
         <button class="delete-item icon">🗑️</button>
       </div>
@@ -302,8 +296,10 @@ function displayAddedItem(item) {
           <h2>${item.attributes.name}</h2>
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
-          <p>${item.attributes.merchant_id}</p>
-          <p>class="merchant-name-in-item">Merchant: ${findMerchant(item.attributes.merchant_id).attributes.name}</p>
+          <p>${findMerchant(item.attributes.merchant_id).attributes.name}</p>
+          <div>
+            <button class="delete-item icon">🗑️</button>
+          </div>
         </article>`)   
   }
 

@@ -173,12 +173,21 @@ section {
   cursor: pointer;
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%; /* Adjust as needed for spacing */
+  justify-content: space-between;
+}
+
 .item {
-  width: 30%;
+  width: 30%; /* Keep this for three items per row */
+  display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
-  ;
+  padding: 1%;
+  box-sizing: border-box; /* Helps maintain padding within width */
 }
 
 
@@ -205,12 +214,12 @@ p {
 
 
 .merchant {
-  width: 30%;
+  width: 37%;
   flex-direction:row;
   justify-content:space-between;
   align-items: center;
   cursor: pointer;
-  margin: 2%;
+  padding: 2%;
 }
 
 #merchants-view {
@@ -226,6 +235,7 @@ div {
   flex-direction: row-reverse;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 
@@ -244,12 +254,11 @@ div {
 }
 
 .merchant-name {
-  padding-left: 10px;
   margin: 1px;
   font-family:fantasy;
   font-weight:900;
   font-size: 30px;
-  
+  font-stretch: semi-condensed;
 }
 
 .display-options {
