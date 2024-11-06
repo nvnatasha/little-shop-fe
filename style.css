@@ -6,7 +6,6 @@
 
 body, html {
   background-color: rgb(174, 172, 172);
-
 }
 
 body {
@@ -194,7 +193,7 @@ p {
 #merchants-view {
   display: flex;
   flex-wrap:wrap;
-  justify-content: center;
+  justify-content:space-around;
   align-items: stretch;
 
 }
@@ -304,7 +303,8 @@ div {
 
 
 /* CSS */
- #add-new-button {
+#add-new-button {
+  margin: 2%;
   padding: 0.6em 2em;
   border: none;
   outline: none;
@@ -370,3 +370,4 @@ div {
   top: 0;
   border-radius: 10px;
 }
+
