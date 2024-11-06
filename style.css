@@ -6,11 +6,13 @@
 
 body, html {
   background-color: rgb(174, 172, 172);
+  cursor: pointer;
 }
 
 body {
   display: flex;
   margin: 0px;
+  cursor: pointer;
 }
 html {
   scroll-behavior: smooth;
@@ -132,6 +134,7 @@ section {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s;
     background-color: #ff9ce6;
+    cursor: pointer;
   }
   
   .item:hover, .merchant:hover {
@@ -141,22 +144,30 @@ section {
   .delete-merchant.icon {
   background-color: #000;
   color: #f98ed2;
+  cursor: pointer;
   }
 
   .delete-item.icon {
     background-color: #000;
     color: #f98ed2;
+    cursor: pointer;
   }
 
 .edit-merchant.icon {
   background-color: #000;
   color: #f98ed2;
+  cursor: pointer;
+}
+
+.view-merchant-items {
+  cursor: pointer;
 }
 
 .item {
   width: 30%;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
   
 }
 
@@ -183,6 +194,7 @@ p {
   align-items: stretch;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   color:#ffff
+  
 }
 
 
@@ -191,7 +203,7 @@ p {
   flex-direction:row;
   justify-content:center;
   align-items: center;
-
+  cursor: pointer;
 }
 
 #merchants-view {
@@ -199,7 +211,7 @@ p {
   flex-wrap:wrap;
   justify-content:space-around;
   align-items: stretch;
-
+  cursor: pointer;
 }
 
 div {
@@ -211,12 +223,13 @@ div {
 
 #submit-item > button{
   background-color: #656565;
+  cursor: pointer;
 }
 
 .view-items-button {
   padding: 5px;
   margin-right: 10px;
-  
+  cursor: pointer;
 }
 
 .merchant-name {
