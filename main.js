@@ -185,7 +185,7 @@ function showMerchantsView() {
   addRemoveActiveNav(merchantsNavButton, itemsNavButton)
   addNewButton.dataset.state = 'merchant'
   show([merchantsView, addNewButton])
-  hide([itemsView])
+  hide([itemsView, addNewItemButton])
   displayMerchants(merchants)
 }
 
@@ -219,7 +219,7 @@ function displayItems(items) {
           <h2>${item.attributes.name}</h2>
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
-          <p>$${item.attributes.merchant_id}</p>
+          <p>${item.attributes.merchant_id}</p>
           <p class="merchant-name-in-item">Merchant: ${merchant}</p>
           <div>
           <button class="delete-merchant icon">🗑️</button>
@@ -277,7 +277,7 @@ function displayAddedItem(item) {
           <h2>${item.attributes.name}</h2>
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
-          <p>$${item.attributes.merchant_id}</p>
+          <p>${item.attributes.merchant_id}</p>
           <p class="merchant-name-in-item">Merchant: ${merchants}</p>
         </article>`)
     
