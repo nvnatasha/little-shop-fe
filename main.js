@@ -99,10 +99,10 @@ function deleteMerchant(event) {
 }
 
 function deleteItem(event) {
-  const id2 = event.target.closest("div").id2.split('-')[1]
-  deleteData(`items/${id2}`)
+  const id = event.target.closest("article").id.split('-')[1]
+  deleteData(`items/${id}`)
     .then(() => {
-      let deletedItem = findItem(id2)
+      let deletedItem = findItem(id)
       let indexOfItem = items.indexOf(deletedItem)
       items.splice(indexOfItem, 1)
       displayItems(items)
@@ -152,6 +152,7 @@ function submitMerchant(event) {
   var merchantName = newMerchantName.value
   postData('merchants', { name: merchantName })
     .then(postedMerchant => {
+      console.log('posted merchant', postedMerchant)
       merchants.push(postedMerchant.data)
       displayAddedMerchant(postedMerchant.data)
       newMerchantName.value = ''
@@ -165,7 +166,8 @@ function submitItem(event) {
   var itemName = newItemName.value
   var itemDesc = newItemDescription.value
   var itemPrice = newItemPrice.value
-  postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice})
+  var merchId = merchants.id
+  postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: merchId})
   .then(postedItem => {
     items.push(postedItem.data)
     displayAddedItem(postedItem.data)
@@ -219,10 +221,9 @@ function displayItems(items) {
           <h2>${item.attributes.name}</h2>
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
-          <p>${item.attributes.merchant_id}</p>
           <p class="merchant-name-in-item">Merchant: ${merchant}</p>
           <div>
-          <button class="delete-merchant icon">🗑️</button>
+          <button class="delete-item icon">🗑️</button>
           </div>
         </article>
     `
@@ -321,7 +322,7 @@ function filterByMerchant(merchantId) {
 
 const findItem = (id) => {
   const foundItem = items.find((item) =>{
-    return parseInt(item.id) === parseInt(id_)
+    return parseInt(item.id) === parseInt(id)
   })
   return foundItem || undefined
 }
