@@ -32,6 +32,10 @@ itemsView.addEventListener('click', (event) => {
   handleItemClicks(event)
 })
 
+singleMerchantView.addEventListener('click', (event) => {
+  handleItemClicks(event)
+})
+
 merchantsNavButton.addEventListener('click', showMerchantsView)
 itemsNavButton.addEventListener('click', showItemsView)
 
@@ -167,10 +171,10 @@ function submitMerchant(event) {
 function submitItem(event) {
   event.preventDefault();
 
-  const itemName = newItemName.value;
-  const itemDesc = newItemDescription.value;
-  const itemPrice = newItemPrice.value; 
-  const merchId = merchantId.value; 
+  let itemName = newItemName.value
+  let itemDesc = newItemDescription.value
+  let itemPrice = newItemPrice.value
+  let merchId = merchantId.value
   
   if (!itemName || !itemDesc || !itemPrice || !merchId) {
     showStatus('Please fill in all fields.', false);
@@ -179,20 +183,21 @@ function submitItem(event) {
 
   postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: parseInt(merchId) })
     .then(postedItem => {
-      items.push(postedItem.data);
-      displayAddedItem(postedItem.data);
+      items.push(postedItem.data)
+      displayAddedItem(postedItem.data)
   
-      newItemName.value = '';
-      newItemDescription.value = '';
+      newItemName.value = ''
+      newItemDescription.value = ''
       newItemPrice.value = ''
       merchantId.value = ''
     
-      showStatus('Success! Item added!', true);
-      hide([itemForm]);
+    
+      showStatus('Success! Item added!', true)
+      hide([itemForm])
     })
     .catch(error => {
-      showStatus('Error: Item could not be added.', false);
-      console.error(error);
+      showStatus('Error: Item could not be added.', false)
+      console.error(error)
     });
 }
 
@@ -202,7 +207,7 @@ function showMerchantsView() {
   addRemoveActiveNav(merchantsNavButton, itemsNavButton)
   addNewButton.dataset.state = 'merchant'
   show([merchantsView, addNewButton])
-  hide([itemsView, addNewItemButton])
+  hide([itemsView, addNewItemButton, singleMerchantView])
   displayMerchants(merchants)
 }
 
@@ -211,7 +216,7 @@ function showItemsView() {
   addRemoveActiveNav(itemsNavButton, merchantsNavButton)
   addNewButton.dataset.state = 'item'
   show([itemsView])
-  hide([merchantsView, merchantForm, addNewButton])
+  hide([merchantsView, addNewButton, addNewItemButton, singleMerchantView])
   displayItems(items, itemsView)
 }
 
@@ -243,6 +248,9 @@ function displayItems(items, view) {
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
           <p class="merchant-name-in-item">Merchant: ${merchant}</p>
+          <div>
+            <button class="delete-item icon">🗑️</button>
+          </div>
         </article>
     `
   })
@@ -297,7 +305,7 @@ function displayMerchantItems(event) {
 }
 
 function displayAddedItem(item) {
-  itemsView.insertAdjacentHTML('beforeend',
+  singleMerchantView.insertAdjacentHTML('beforeend',
   ` <article class="item" id="item-${item.id}">
           <img src="" alt="">
           <h2>${item.attributes.name}</h2>
