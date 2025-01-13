@@ -1,23 +1,24 @@
 /* GENERAL */
- 
+
 * {
   font-family: sans-serif;
 }
 
-body, html {
-  background-color: gray;
-}
 
 body {
+  height: 100vh;
   display: flex;
+  flex-direction: row;
   margin: 0px;
 }
 
 /* SIDEBAR */
 
 aside {
-  width: 25%;
-  margin: none;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  background: rgb(161, 161, 161);
 }
 
 header {
@@ -42,7 +43,7 @@ nav {
   flex-direction: column;
   align-items: end;
 }
-
+/* 
 nav > button {
   border: none;
   margin-bottom: 20px;
@@ -51,43 +52,181 @@ nav > button {
   text-align: center;
   border-radius: 10px 0px 0px 10px;
   padding: 20px;
+} */
+
+
+/* CSS */
+nav > button {
+  --b: 3px;   /* border thickness */
+  --s: .45em; /* size of the corner */
+  --color: #000000;
+  
+  padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid rgb(229, 255, 0);
+  outline-offset: .6em;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 15px;
 }
 
-.active-nav {
+nav > button:hover,
+nav > button:focus-visible{
+
+  outline-color: var(black);
+  outline-offset: .05em;
   background-color: white;
+  opacity: 0.5;
 }
 
 /* MAIN */
 
 main {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
   padding: 10px;
   width: 75%;
-  background-color: white;
 }
+
+img {
+  pointer-events: none;
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  z-index: -1;
+}
+
 
 form {
   display: flex;
 }
 
+#merchants-view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+h3 {
+  font-family:'Century Gothic', sans-serif;
+  color: rgb(0, 0, 0);
+  font-size: 25px;
+  font-weight: 100;
+  margin: 0 0 1rem 0;
+}
+
+.view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+}
+
+
+.add-new-button{
+  display: block;
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #333;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all .35s;
+}
+
+.add-new-button span{
+  position: relative;
+  z-index: 2;
+}
+
+.add-new-button:after{
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #b7ff00;
+  transition: all .35s;
+  opacity: 0.5;
+}
+
+.add-new-button:hover{
+  color: #000000;
+}
+
+.add-new-button:hover:after{
+  width: 100%;
+}
+
+
 .item,
 .merchant {
   display: flex;
+  flex-direction: column;
   background-color: lightgray;
-  margin: 10px;
-  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 40%;
+  height: 1.5%;
+  text-align: center;
 }
 
 .item {
-  width: 30%;
-  flex-direction: column;
+  /* width: 30%;
+  flex-direction: column; */
   justify-content: center;
 }
 
 .merchant {
-  width: 98%;
-  flex-direction: row;
+  /* width: 30%;
+  height: 30%;
+  display: flex;
+  flex-direction: row; */
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
+}
+
+#items-view, #merchants-view, .view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  margin: 5%;
+}
+
+@media (max-width: 768px) {
+  .item,
+  .merchant {
+    width: calc(45% - 1rem); /* Two items per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .item,
+  .merchant {
+    width: 100%; /* Full width for small screens */
+  }
 }
 
 .view-items-button {
