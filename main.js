@@ -113,7 +113,7 @@ function deleteItem(event) {
       let deletedItem = findItem(id)
       let indexOfItem = items.indexOf(deletedItem)
       items.splice(indexOfItem, 1)
-      displayItems(items)
+      displayItems(items, singleMerchantView)
       showStatus('Success! Item removed!', true)
     })
 }
@@ -184,7 +184,7 @@ function submitItem(event) {
   postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: parseInt(merchId) })
     .then(postedItem => {
       items.push(postedItem.data)
-      displayAddedItem(postedItem.data)
+      displayAddedItem(postedItem.data, [singleMerchantView, itemsView])
   
       newItemName.value = ''
       newItemDescription.value = ''
@@ -233,10 +233,10 @@ function showMerchantItemsView(id, items) {
 // Functions that add data to the DOM
 function displayItems(items, view) {
   if (itemsView === view || singleMerchantView === view){ 
-  view.innerHTML = ''}
+    view.innerHTML = ''}
   if (items.length === 0) {
-    view.innerHTML = '<p>No Items Yet For This Merchant.</p>';
-    return; 
+      view.innerHTML = '<p>No Items Yet For This Merchant.</p>';
+  return; 
   }
   let firstHundredItems = items.slice(0, 99)
   firstHundredItems.forEach(item => {
@@ -254,8 +254,10 @@ function displayItems(items, view) {
         </article>
     `
   })
+  }
+
   
-}
+
 
 function displayMerchants(merchants) {
     merchantsView.innerHTML = ''
@@ -304,8 +306,9 @@ function displayMerchantItems(event) {
   showMerchantItemsView(merchantId, filteredMerchantItems)
 }
 
-function displayAddedItem(item) {
-  singleMerchantView.insertAdjacentHTML('beforeend',
+function displayAddedItem(item, targetViews) {
+
+  const itemHTML =
   ` <article class="item" id="item-${item.id}">
           <img src="" alt="">
           <h2>${item.attributes.name}</h2>
@@ -315,8 +318,17 @@ function displayAddedItem(item) {
           <div>
             <button class="delete-item icon">🗑️</button>
           </div>
-        </article>`)   
-  }
+        </article>`
+        
+        targetViews.forEach((view) =>{
+          if (view.querySelector('p')?.textContent === 'No items yet for this Merchant.') {
+            view.innerHTML = '';
+          }
+          view.insertAdjacentHTML('beforeend', itemHTML)
+          })
+        }
+  
+  
 
 
 
@@ -339,16 +351,18 @@ function addRemoveActiveNav(nav1, nav2) {
 }
 
 function filterByMerchant(merchantId) {
-  // const specificMerchantItems = []
 
   const filtered = items.filter((item)=> {
     return item.attributes.merchant_id === parseInt(merchantId)
   })
   return filtered
-  // filtered.forEach((item) =>{
-  //   specificMerchantItems.push(item)
-  // })
-  // return specificMerchantItems
+}
+
+function findItem(id) {
+  let foundItem = items.find((item) =>{
+    return parseInt(item.id) === parseInt(id)
+  })
+  return foundItem
 }
 
 function findMerchant(id) {
