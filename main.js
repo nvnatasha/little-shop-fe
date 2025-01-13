@@ -237,22 +237,19 @@ function addRemoveActiveNav(nav1, nav2) {
 function filterByMerchant(merchantId) {
   const specificMerchantItems = []
 
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].attributes.merchant_id === parseInt(merchantId)) {
-      specificMerchantItems.push(items[i])
-    }
-  }
-
+  const filtered = items.filter((item)=> {
+    return item.merchant_id === merchantId
+  })
+  filtered.forEach((item) =>{
+    specificMerchantItems.push(item)
+  })
   return specificMerchantItems
 }
 
 function findMerchant(id) {
-  let foundMerchant;
 
-  for (let i = 0; i < merchants.length; i++) {
-    if (parseInt(merchants[i].id) === parseInt(id)) {
-      foundMerchant = merchants[i]
-      return foundMerchant
-    }
-  }
+  let foundMerchant = merchants.find((merchant) =>{
+    return parseInt(merchant.id)=== parseInt(id)
+  })
+    return foundMerchant
 }
