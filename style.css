@@ -35,13 +35,16 @@ header {
 
 h1 {
   font-size: 2.5em;
+  font-family:'Century Gothic', sans-serif;
 }
 
 h1, 
 h2 {
+  font-family:'Century Gothic', sans-serif;
   margin: 0;
   color: white;
 }
+
 
 nav {
   display: flex;
@@ -94,10 +97,11 @@ main {
   padding: 10px;
   width: 75%;
 
-  background-image: url('myfolder/images/7305.jpg');
+  background-image: url('my-folder/images/7305.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;;
+  background-position: center;
+  overflow-y: scroll;
 }
 
 img {
@@ -124,8 +128,17 @@ h3 {
   font-family:'Century Gothic', sans-serif;
   color: rgb(0, 0, 0);
   font-size: 25px;
-  font-weight: 100;
+  font-weight: 300;
   margin: 0 0 1rem 0;
+}
+
+span {
+  font-weight:100;
+}
+
+h4 {
+  font-weight:100;
+  letter-spacing:0.2cap;
 }
 
 .view {
@@ -204,12 +217,13 @@ h3 {
 #single-merchant-view .item, #items-view .item {
   justify-content: center;
   height: 28%;
+  padding: 27px;
 }
 
 
 .merchant {
   justify-content: space-between;
-  height: 12%;
+  height: 14%;
 }
 
 #items-view, #merchants-view, #single-merchant-view {
