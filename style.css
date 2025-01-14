@@ -281,7 +281,8 @@ h4 {
 
 .pagination-controls {
   display: flex;
-  justify-content: center;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
   margin: 1rem 0;
 }
 
