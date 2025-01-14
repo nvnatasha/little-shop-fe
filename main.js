@@ -61,6 +61,9 @@ submitItemButton.addEventListener('click', (event) => {
 //Global variables
 let merchants;
 let items;
+let currentPage = 1
+const itemsPerPage = 10
+const merchantsPerPage = 10
 
 //Page load data fetching
 Promise.all([fetchData('merchants'), fetchData('items')])
@@ -113,7 +116,7 @@ function deleteItem(event) {
       let deletedItem = findItem(id)
       let indexOfItem = items.indexOf(deletedItem)
       items.splice(indexOfItem, 1)
-      displayItems(items)
+      displayItems(items, singleMerchantView)
       showStatus('Success! Item removed!', true)
     })
 }
@@ -184,7 +187,7 @@ function submitItem(event) {
   postData('items', { name: itemName, description: itemDesc, unit_price: itemPrice, merchant_id: parseInt(merchId) })
     .then(postedItem => {
       items.push(postedItem.data)
-      displayAddedItem(postedItem.data)
+      displayAddedItem(postedItem.data, [singleMerchantView, itemsView])
   
       newItemName.value = ''
       newItemDescription.value = ''
@@ -203,6 +206,7 @@ function submitItem(event) {
 
 // Functions that control the view 
 function showMerchantsView() {
+  currentPage = 1
   showingText.innerText = "All Merchants"
   addRemoveActiveNav(merchantsNavButton, itemsNavButton)
   addNewButton.dataset.state = 'merchant'
@@ -212,6 +216,7 @@ function showMerchantsView() {
 }
 
 function showItemsView() {
+  currentPage = 1
   showingText.innerText = "All Items"
   addRemoveActiveNav(itemsNavButton, merchantsNavButton)
   addNewButton.dataset.state = 'item'
@@ -221,6 +226,7 @@ function showItemsView() {
 }
 
 function showMerchantItemsView(id, items) {
+  currentPage = 1
   console.log('items:', items)
   showingText.innerText = `All Items for Merchant #${id}`
   addRemoveActiveNav(itemsNavButton, merchantsNavButton)
@@ -233,13 +239,21 @@ function showMerchantItemsView(id, items) {
 // Functions that add data to the DOM
 function displayItems(items, view) {
   if (itemsView === view || singleMerchantView === view){ 
-  view.innerHTML = ''}
+    view.innerHTML = ''}
+
   if (items.length === 0) {
-    view.innerHTML = '<p>No Items Yet For This Merchant.</p>';
-    return; 
+      view.innerHTML = '<p>No Items Yet For This Merchant.</p>';
+  return; 
   }
-  let firstHundredItems = items.slice(0, 99)
-  firstHundredItems.forEach(item => {
+
+  const totalItems = items.length
+  const totalItemPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  
+  const paginatedItems = items.length <= itemsPerPage ? items : items.slice(startIndex, endIndex);
+
+  paginatedItems.forEach(item => {
     let merchant = findMerchant(item.attributes.merchant_id).attributes.name
     view.innerHTML += `
     <article class="item" id="item-${item.id}">
@@ -254,12 +268,25 @@ function displayItems(items, view) {
         </article>
     `
   })
+
+    if (totalItemPages > 1) {
+      addPaginationControls(view, totalItemPages, displayItems.bind(null,items,view)) 
+      }
+    }
+
   
-}
+
 
 function displayMerchants(merchants) {
     merchantsView.innerHTML = ''
-    merchants.forEach(merchant => {
+
+    const startIndex = (currentPage - 1) * merchantsPerPage;
+    const endIndex = startIndex + merchantsPerPage;
+    const paginatedMerchants = merchants.slice(startIndex, endIndex);
+    const totalMerchants = merchants.length
+    let totalMerchantPages = Math.ceil (totalMerchants / merchantsPerPage)
+
+    paginatedMerchants.forEach(merchant => {
         merchantsView.innerHTML += 
         `<article class="merchant" id="merchant-${merchant.id}">
           <h3 class="merchant-name">${merchant.attributes.name}</h3>
@@ -277,6 +304,7 @@ function displayMerchants(merchants) {
           </div>
         </article>`
     })
+    addPaginationControls(merchantsView, totalMerchantPages, displayMerchants.bind(null, merchants))
 }
 
 function displayAddedMerchant(merchant) {
@@ -304,8 +332,9 @@ function displayMerchantItems(event) {
   showMerchantItemsView(merchantId, filteredMerchantItems)
 }
 
-function displayAddedItem(item) {
-  singleMerchantView.insertAdjacentHTML('beforeend',
+function displayAddedItem(item, targetViews) {
+
+  const itemHTML =
   ` <article class="item" id="item-${item.id}">
           <img src="" alt="">
           <h2>${item.attributes.name}</h2>
@@ -315,8 +344,43 @@ function displayAddedItem(item) {
           <div>
             <button class="delete-item icon">🗑️</button>
           </div>
-        </article>`)   
-  }
+        </article>`
+        
+        targetViews.forEach((view) =>{
+          if (view.querySelector('p')?.textContent === 'No items yet for this Merchant.') {
+            view.innerHTML = '';
+          }
+          view.insertAdjacentHTML('beforeend', itemHTML)
+          })
+        }
+
+
+function addPaginationControls(view, totalPages, displayFunction) {
+    const paginationDiv = document.createElement('div');
+          paginationDiv.classList.add('pagination-controls');
+        
+    if (currentPage > 1) {
+    const prevButton = document.createElement('button');
+          prevButton.innerText = 'Previous';
+          prevButton.addEventListener('click', () => {
+            currentPage--;
+            displayFunction();
+            });
+            paginationDiv.appendChild(prevButton);
+          }
+        
+          if (currentPage < totalPages) {
+            const nextButton = document.createElement('button');
+            nextButton.innerText = 'Next';
+            nextButton.addEventListener('click', () => {
+              currentPage++;
+              displayFunction();
+            });
+            paginationDiv.appendChild(nextButton);
+          }
+        
+          view.appendChild(paginationDiv);
+        }
 
 
 
@@ -339,16 +403,18 @@ function addRemoveActiveNav(nav1, nav2) {
 }
 
 function filterByMerchant(merchantId) {
-  // const specificMerchantItems = []
 
   const filtered = items.filter((item)=> {
     return item.attributes.merchant_id === parseInt(merchantId)
   })
   return filtered
-  // filtered.forEach((item) =>{
-  //   specificMerchantItems.push(item)
-  // })
-  // return specificMerchantItems
+}
+
+function findItem(id) {
+  let foundItem = items.find((item) =>{
+    return parseInt(item.id) === parseInt(id)
+  })
+  return foundItem
 }
 
 function findMerchant(id) {
