@@ -257,7 +257,6 @@ function displayItems(items, view) {
     let merchant = findMerchant(item.attributes.merchant_id).attributes.name
     view.innerHTML += `
     <article class="item" id="item-${item.id}">
-          <img src="" alt="">
           <h2>${item.attributes.name}</h2>
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
