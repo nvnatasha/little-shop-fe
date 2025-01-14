@@ -61,6 +61,9 @@ submitItemButton.addEventListener('click', (event) => {
 //Global variables
 let merchants;
 let items;
+let currentPage = 1
+const itemsPerPage = 10
+const merchantsPerPage = 10
 
 //Page load data fetching
 Promise.all([fetchData('merchants'), fetchData('items')])
@@ -203,6 +206,7 @@ function submitItem(event) {
 
 // Functions that control the view 
 function showMerchantsView() {
+  currentPage = 1
   showingText.innerText = "All Merchants"
   addRemoveActiveNav(merchantsNavButton, itemsNavButton)
   addNewButton.dataset.state = 'merchant'
@@ -212,6 +216,7 @@ function showMerchantsView() {
 }
 
 function showItemsView() {
+  currentPage = 1
   showingText.innerText = "All Items"
   addRemoveActiveNav(itemsNavButton, merchantsNavButton)
   addNewButton.dataset.state = 'item'
@@ -221,6 +226,7 @@ function showItemsView() {
 }
 
 function showMerchantItemsView(id, items) {
+  currentPage = 1
   console.log('items:', items)
   showingText.innerText = `All Items for Merchant #${id}`
   addRemoveActiveNav(itemsNavButton, merchantsNavButton)
@@ -234,12 +240,20 @@ function showMerchantItemsView(id, items) {
 function displayItems(items, view) {
   if (itemsView === view || singleMerchantView === view){ 
     view.innerHTML = ''}
+
   if (items.length === 0) {
       view.innerHTML = '<p>No Items Yet For This Merchant.</p>';
   return; 
   }
-  let firstHundredItems = items.slice(0, 99)
-  firstHundredItems.forEach(item => {
+
+  const totalItems = items.length
+  const totalItemPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  
+  const paginatedItems = items.length <= itemsPerPage ? items : items.slice(startIndex, endIndex);
+
+  paginatedItems.forEach(item => {
     let merchant = findMerchant(item.attributes.merchant_id).attributes.name
     view.innerHTML += `
     <article class="item" id="item-${item.id}">
@@ -254,14 +268,25 @@ function displayItems(items, view) {
         </article>
     `
   })
-  }
+
+    if (totalItemPages > 1) {
+      addPaginationControls(view, totalItemPages, displayItems.bind(null,items,view)) 
+      }
+    }
 
   
 
 
 function displayMerchants(merchants) {
     merchantsView.innerHTML = ''
-    merchants.forEach(merchant => {
+
+    const startIndex = (currentPage - 1) * merchantsPerPage;
+    const endIndex = startIndex + merchantsPerPage;
+    const paginatedMerchants = merchants.slice(startIndex, endIndex);
+    const totalMerchants = merchants.length
+    let totalMerchantPages = Math.ceil (totalMerchants / merchantsPerPage)
+
+    paginatedMerchants.forEach(merchant => {
         merchantsView.innerHTML += 
         `<article class="merchant" id="merchant-${merchant.id}">
           <h3 class="merchant-name">${merchant.attributes.name}</h3>
@@ -279,6 +304,7 @@ function displayMerchants(merchants) {
           </div>
         </article>`
     })
+    addPaginationControls(merchantsView, totalMerchantPages, displayMerchants.bind(null, merchants))
 }
 
 function displayAddedMerchant(merchant) {
@@ -327,8 +353,34 @@ function displayAddedItem(item, targetViews) {
           view.insertAdjacentHTML('beforeend', itemHTML)
           })
         }
-  
-  
+
+
+function addPaginationControls(view, totalPages, displayFunction) {
+    const paginationDiv = document.createElement('div');
+          paginationDiv.classList.add('pagination-controls');
+        
+    if (currentPage > 1) {
+    const prevButton = document.createElement('button');
+          prevButton.innerText = 'Previous';
+          prevButton.addEventListener('click', () => {
+            currentPage--;
+            displayFunction();
+            });
+            paginationDiv.appendChild(prevButton);
+          }
+        
+          if (currentPage < totalPages) {
+            const nextButton = document.createElement('button');
+            nextButton.innerText = 'Next';
+            nextButton.addEventListener('click', () => {
+              currentPage++;
+              displayFunction();
+            });
+            paginationDiv.appendChild(nextButton);
+          }
+        
+          view.appendChild(paginationDiv);
+        }
 
 
 

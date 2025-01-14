@@ -22,13 +22,13 @@ aside {
   display: flex;
   flex-direction: column;
   width: 30%;
-  background: rgb(161, 161, 161);
+  background: rgb(3 146 185);
 }
 
 header {
   text-align: center;
   margin: 10px 10px 80px 10px;
-  background-color: black;
+  background-color: #1e2b4f;
   color: white;
   padding: 15px;
 }
@@ -40,6 +40,7 @@ h1 {
 h1, 
 h2 {
   margin: 0;
+  color: white;
 }
 
 nav {
@@ -47,16 +48,6 @@ nav {
   flex-direction: column;
   align-items: end;
 }
-/* 
-nav > button {
-  border: none;
-  margin-bottom: 20px;
-  background-color: gray;
-  width: 65%;
-  text-align: center;
-  border-radius: 10px 0px 0px 10px;
-  padding: 20px;
-} */
 
 
 /* CSS */
@@ -82,6 +73,7 @@ nav > button {
   -webkit-user-select: none;
   touch-action: manipulation;
   margin: 15px;
+  cursor: pointer;
 }
 
 nav > button:hover,
@@ -89,7 +81,7 @@ nav > button:focus-visible{
 
   outline-color: var(black);
   outline-offset: .05em;
-  background-color: white;
+  background-color: #1e2b4f;;
   opacity: 0.5;
 }
 
@@ -154,12 +146,14 @@ h3 {
   font-size: 12px;
   font-family: sans-serif;
   text-decoration: none;
-  color: #333;
+  color: #fff9f9;
   border: 2px solid #333;
   letter-spacing: 2px;
   text-align: center;
   position: relative;
   transition: all .35s;
+  background: rgb(3 146 185);
+  cursor: pointer;
 }
 
 #add-new-item-button, #add-new-button span{
@@ -192,7 +186,7 @@ h3 {
 .merchant {
   display: flex;
   flex-direction: column;
-  background-color: lightgray;
+  background-color: rgb(3 146 185);
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -243,16 +237,24 @@ h3 {
 .view-items-button {
   padding: 5px;
   margin-right: 10px;
+  cursor: pointer;
+}
+
+.edit-merchant.icon, .view-merchant-items, .delete-merchant.icon,
+.delete-item.icon {
+  cursor: pointer;
 }
 
 .merchant-name {
   padding-left: 10px;
   margin: 0px;
+  color: white;
 }
 
 .display-options {
   display: flex;
   align-items: center;
+  margin: 2%;
 }
 
 .display-options > button {
@@ -263,6 +265,18 @@ h3 {
   display: inline;
 }
 
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.pagination-controls button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
 
 .success {
   color: green;
@@ -271,6 +285,7 @@ h3 {
 .fail {
   color: red;
 }
+
 
 /* HIDDEN ELEMENTS */
 
