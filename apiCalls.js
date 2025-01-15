@@ -44,14 +44,14 @@ function deleteData(endpoint) {
   })
   .then(response => {
     if (response.ok) {
-      return response.json();
+      return response.text().then(text => text ? JSON.parse(text) : null);
     } else {
-      throw new Error();
+      throw new Error('Failed to delete. Server responded with an error.');
     }
   })  
   .catch(error => {
     console.log(error)
-    showStatus('Failed to delete merchant. Try again later.', false)
+    showStatus('Failed to delete. Try again later.', false)
   })
 }
 
