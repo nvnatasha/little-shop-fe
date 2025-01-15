@@ -32,9 +32,10 @@ itemsView.addEventListener('click', (event) => {
   handleItemClicks(event)
 })
 
-singleMerchantView.addEventListener('click', (event) => {
-  handleItemClicks(event)
+singleMerchantView.addEventListener('click', (event) =>{
+  handleMerchantItemClicks(event)
 })
+
 
 merchantsNavButton.addEventListener('click', showMerchantsView)
 itemsNavButton.addEventListener('click', showItemsView)
@@ -97,6 +98,13 @@ function handleItemClicks(event) {
   }
 }
 
+function handleMerchantItemClicks(event) {
+  if (event.target.classList.contains("delete-item")) {
+    deleteItem(event)
+  }
+}
+
+
 function deleteMerchant(event) {
   const id = event.target.closest("article").id.split('-')[1]
   deleteData(`merchants/${id}`)
@@ -115,8 +123,10 @@ function deleteItem(event) {
     .then(() => {
       let deletedItem = findItem(id)
       let indexOfItem = items.indexOf(deletedItem)
+      const merchId = deletedItem.attributes.merchant_id
       items.splice(indexOfItem, 1)
-      displayItems(items, singleMerchantView)
+      const updatedMerchantItems = filterByMerchant(merchId)
+      displayItems(updatedMerchantItems, singleMerchantView)
       showStatus('Success! Item removed!', true)
     })
 }
@@ -335,7 +345,6 @@ function displayAddedItem(item, targetViews) {
 
   const itemHTML =
   ` <article class="item" id="item-${item.id}">
-          <img src="" alt="">
           <h2>${item.attributes.name}</h2>
           <p>${item.attributes.description}</p>
           <p>$${item.attributes.unit_price}</p>
@@ -408,6 +417,7 @@ function filterByMerchant(merchantId) {
   })
   return filtered
 }
+
 
 function findItem(id) {
   let foundItem = items.find((item) =>{
